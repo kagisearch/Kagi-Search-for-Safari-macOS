@@ -38,7 +38,8 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     }
     
     override func page(_ page: SFSafariPage, willNavigateTo url: URL?) {
-        guard let url = url,
+        guard UserDefaults.standard.bool(forKey: SafariExtensionViewController.enableExtensionKey),
+              let url = url,
               let kagiSearchURL = kagiSearchURL(url: url) else {
             return
         }
@@ -50,7 +51,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     // only called for domains specified in Info.plist
     override func additionalRequestHeaders(for url: URL, completionHandler: @escaping ([String : String]?) -> Void) {
         func privateSessionToken() -> String? {
-            if let privateSessionLink = UserDefaults.standard.string(forKey: SafariExtensionViewController.key),
+            if let privateSessionLink = UserDefaults.standard.string(forKey: SafariExtensionViewController.sessionLinkKey),
                let url = URL(string: privateSessionLink.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!),
                let token = URLComponents(string: url.absoluteString)?.queryItems?.first(where: { $0.name == "token" })?.value {
                 return token
