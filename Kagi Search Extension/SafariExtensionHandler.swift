@@ -31,7 +31,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     func kagiSearchURL(url: URL) -> URL? {
         if let host = url.host,
            let source = sources.first(where: { host.contains($0.host) }),
-           let textQuery = URLComponents(string: url.absoluteString)?.queryItems?.first(where: { $0.name == source.queryParameter })?.value {
+           let textQuery = URLComponents(string: url.absoluteString)?.percentEncodedQueryItems?.first(where: { $0.name == source.queryParameter })?.value {
             return URL(string: "https://kagi.com/search?q=\(textQuery)")
         }
         return nil
