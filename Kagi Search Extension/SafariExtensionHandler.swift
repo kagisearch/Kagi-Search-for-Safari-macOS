@@ -31,10 +31,26 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     func kagiSearchURL(url: URL) -> URL? {
         if let host = url.host,
            let source = sources.first(where: { host.contains($0.host) }),
-           let textQuery = URLComponents(string: url.absoluteString)?.percentEncodedQueryItems?.first(where: { $0.name == source.queryParameter })?.value {
+           let textQuery = URLComponents(string: url.absoluteString)?.percentEncodedQueryItems?.first(where: { $0.name == source.queryParameter })?.value,
+           !self.shouldSkipRedirect(url: url) {
             return URL(string: "https://kagi.com/search?q=\(textQuery)")
         }
         return nil
+    }
+    
+    // bangs handling
+    func shouldSkipRedirect(url: URL) -> Bool {
+        let host = url.host?.replacingOccurrences(of: "www.", with: "")
+        
+        func paramWithName(_ name: String) -> Any? {
+            URLComponents(string: url.absoluteString)?.queryItems?.first(where: { $0.name == name })?.value
+        }
+        return [
+            host?.contains("google.") == true && paramWithName("client") == nil,
+            host?.contains("bing.") == true && paramWithName("form") == nil,
+            host?.contains("duckduckgo.") == true && paramWithName("t") == nil,
+            host?.contains("search.yahoo.") == true && paramWithName("fr") == nil
+        ].contains(true)
     }
     
     override func page(_ page: SFSafariPage, willNavigateTo url: URL?) {

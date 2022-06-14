@@ -52,8 +52,8 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LSC-AC-1HI">
-                    <rect key="frame" x="18" y="189" width="179" height="18"/>
-                    <buttonCell key="cell" type="check" title="Make Kagi default search" bezelStyle="regularSquare" imagePosition="left" inset="2" id="NPX-e3-eq0">
+                    <rect key="frame" x="18" y="189" width="223" height="18"/>
+                    <buttonCell key="cell" type="check" title="Make Kagi default search engine" bezelStyle="regularSquare" imagePosition="left" inset="2" id="NPX-e3-eq0">
                         <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>

@@ -13,3 +13,11 @@ function openPreferences() {
 }
 
 document.querySelector("button.open-preferences").addEventListener("click", openPreferences);
+
+function updateEnableImage(isDark) {
+    if (isDark) {
+        document.getElementById("enable_img").src = "../Enable_dark.png";
+    } else {
+        document.getElementById("enable_img").src = "../Enable.png";
+    }
+}
