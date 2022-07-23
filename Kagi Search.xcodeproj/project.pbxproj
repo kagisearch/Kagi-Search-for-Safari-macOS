@@ -20,6 +20,10 @@
 		C31E69492823DD4F00B1491B /* SafariExtensionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C31E69472823DD4F00B1491B /* SafariExtensionViewController.xib */; };
 		C31E69582823DEAB00B1491B /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C31E69572823DEAB00B1491B /* Icon.png */; };
 		C31E695C2823DF3F00B1491B /* ToolbarItemIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = C31E695B2823DF3F00B1491B /* ToolbarItemIcon.png */; };
+		C39A9F6D285872D700E4C0A3 /* Enable.png in Resources */ = {isa = PBXBuildFile; fileRef = C39A9F6C285872D700E4C0A3 /* Enable.png */; };
+		C39A9F6F2858759E00E4C0A3 /* Enable_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = C39A9F6E2858759E00E4C0A3 /* Enable_dark.png */; };
+		C39A9F7128588C0100E4C0A3 /* MainConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C39A9F7028588C0100E4C0A3 /* MainConfig.xcconfig */; };
+		C39A9F7228588C0100E4C0A3 /* MainConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C39A9F7028588C0100E4C0A3 /* MainConfig.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +69,9 @@
 		C31E694B2823DD4F00B1491B /* Kagi_Search_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kagi_Search_Extension.entitlements; sourceTree = "<group>"; };
 		C31E69572823DEAB00B1491B /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		C31E695B2823DF3F00B1491B /* ToolbarItemIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolbarItemIcon.png; sourceTree = "<group>"; };
+		C39A9F6C285872D700E4C0A3 /* Enable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Enable.png; sourceTree = "<group>"; };
+		C39A9F6E2858759E00E4C0A3 /* Enable_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Enable_dark.png; sourceTree = "<group>"; };
+		C39A9F7028588C0100E4C0A3 /* MainConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MainConfig.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +95,7 @@
 		C31E69142823DD4E00B1491B = {
 			isa = PBXGroup;
 			children = (
+				C39A9F7028588C0100E4C0A3 /* MainConfig.xcconfig */,
 				C31E691F2823DD4E00B1491B /* Kagi Search */,
 				C31E693D2823DD4F00B1491B /* Kagi Search Extension */,
 				C31E691E2823DD4E00B1491B /* Products */,
@@ -124,6 +132,8 @@
 				C31E69572823DEAB00B1491B /* Icon.png */,
 				C31E69282823DD4E00B1491B /* Style.css */,
 				C31E692A2823DD4E00B1491B /* Script.js */,
+				C39A9F6C285872D700E4C0A3 /* Enable.png */,
+				C39A9F6E2858759E00E4C0A3 /* Enable_dark.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -231,6 +241,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C31E69302823DD4E00B1491B /* Main.storyboard in Resources */,
+				C39A9F6D285872D700E4C0A3 /* Enable.png in Resources */,
+				C39A9F6F2858759E00E4C0A3 /* Enable_dark.png in Resources */,
+				C39A9F7128588C0100E4C0A3 /* MainConfig.xcconfig in Resources */,
 				C31E692B2823DD4E00B1491B /* Script.js in Resources */,
 				C31E69252823DD4E00B1491B /* Main.html in Resources */,
 				C31E69322823DD4F00B1491B /* Assets.xcassets in Resources */,
@@ -243,6 +256,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C39A9F7228588C0100E4C0A3 /* MainConfig.xcconfig in Resources */,
 				C31E695C2823DF3F00B1491B /* ToolbarItemIcon.png in Resources */,
 				C31E69492823DD4F00B1491B /* SafariExtensionViewController.xib in Resources */,
 			);
@@ -309,6 +323,7 @@
 /* Begin XCBuildConfiguration section */
 		C31E694C2823DD4F00B1491B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C39A9F7028588C0100E4C0A3 /* MainConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -369,6 +384,7 @@
 		};
 		C31E694D2823DD4F00B1491B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C39A9F7028588C0100E4C0A3 /* MainConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -426,7 +442,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Kagi Search Extension/Kagi_Search_Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				DEVELOPMENT_TEAM = TFVG979488;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -438,8 +454,8 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -458,7 +474,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Kagi Search Extension/Kagi_Search_Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				DEVELOPMENT_TEAM = TFVG979488;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -470,8 +486,8 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -494,7 +510,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				DEVELOPMENT_TEAM = TFVG979488;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -507,8 +523,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -533,7 +549,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				DEVELOPMENT_TEAM = TFVG979488;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -546,8 +562,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,

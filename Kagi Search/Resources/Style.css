@@ -7,11 +7,15 @@
 :root {
     color-scheme: light dark;
 
-    --spacing: 20px;
+    --spacing: 0px;
 }
 
 html {
     height: 100%;
+}
+
+img.rounded {
+    border-radius: 23px;
 }
 
 body {
