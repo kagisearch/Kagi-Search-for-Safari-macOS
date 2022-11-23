@@ -25,7 +25,6 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         SearchSource(host: "startpage.com", queryParameter: "query"),
         SearchSource(host: "neeva.com", queryParameter: "q"),
         SearchSource(host: "qwant.com", queryParameter: "q"),
-        
     ]
 
     func kagiSearchURL(url: URL) -> URL? {
@@ -47,9 +46,16 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         }
         return [
             host?.contains("google.") == true && paramWithName("client") == nil,
+            host?.contains("google.") == true && ((paramWithName("sxsrf") as? String)?.isEmpty == false || (paramWithName("source") as? String)?.isEmpty == false),
+
             host?.contains("bing.") == true && paramWithName("form") == nil,
+            host?.contains("bing.") == true && (((paramWithName("cvid") as? String)?.isEmpty == false) || ((paramWithName("sc") as? String)?.isEmpty == false) || ((paramWithName("qs") as? String)?.isEmpty == false)),
+            
             host?.contains("duckduckgo.") == true && paramWithName("t") == nil,
-            host?.contains("search.yahoo.") == true && paramWithName("fr") == nil
+            host?.contains("duckduckgo.") == true && ((paramWithName("t") == nil) || ((paramWithName("t") as? String) == "h_")),
+            
+            host?.contains("search.yahoo.") == true && paramWithName("fr") == nil,
+            host?.contains("search.yahoo.") == true && (paramWithName("fp") as? String == "1"),
         ].contains(true)
     }
     
