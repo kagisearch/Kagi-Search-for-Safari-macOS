@@ -47,6 +47,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         return [
             host?.contains("google.") == true && paramWithName("client") == nil,
             host?.contains("google.") == true && ((paramWithName("sxsrf") as? String)?.isEmpty == false || (paramWithName("source") as? String)?.isEmpty == false),
+            host?.contains("google.") == true && paramWithName("client") as? String == "internal-element-cse",
 
             host?.contains("bing.") == true && paramWithName("form") == nil,
             host?.contains("bing.") == true && (((paramWithName("cvid") as? String)?.isEmpty == false) || ((paramWithName("sc") as? String)?.isEmpty == false) || ((paramWithName("qs") as? String)?.isEmpty == false)),
