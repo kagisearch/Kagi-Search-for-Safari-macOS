@@ -4,8 +4,12 @@
 //
 
 import SafariServices
+import os
 
 class SafariExtensionHandler: SFSafariExtensionHandler {
+    
+    let debugLog = OSLog(subsystem: "com.kagimacOS.Kagi-Search.SafariExtensionHandler", category: "debug")
+    
     struct SearchSource {
         let host: String
         let queryParameter: String
@@ -61,12 +65,40 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     }
     
     override func page(_ page: SFSafariPage, willNavigateTo url: URL?) {
-        guard UserDefaults.standard.bool(forKey: SafariExtensionViewController.enableExtensionKey),
-              let url = url,
-              let kagiSearchURL = kagiSearchURL(url: url) else {
+        if let url = url,
+           url.host?.hasPrefix("kagi") == true {
+            os_log("<< skipping redirect checks for a kagi.com url", log: debugLog, type: .debug)
+        }
+        let isExtensionEnabled = UserDefaults.standard.bool(forKey: SafariExtensionViewController.enableExtensionKey)
+        os_log(">> willNavigateTo: %@", log: debugLog, type: .debug, String(describing: url))
+        os_log(isExtensionEnabled ? ">> Extension enabled" : ">> Extension disabled", log: debugLog, type: .debug)
+        os_log(url != nil ? ">> url exists" : ">> url is nil", log: debugLog, type: .debug)
+        var kagiSearchURL: URL? = nil
+        if (url != nil) {
+            kagiSearchURL = self.kagiSearchURL(url: url!)
+            os_log(">> kagiSearchURL requested. Result: %@", log: debugLog, type: .debug, String(describing: kagiSearchURL))
+        }
+        os_log(kagiSearchURL != nil ? ">> attempting redirect" : ">> will not attempt redirect")
+        guard isExtensionEnabled,
+              let kagiSearchURL = kagiSearchURL else {
+            os_log(">>>> Officially **Not** redirecting to Kagi", log: debugLog, type: .debug)
             return
         }
+        os_log(">>>> requesting tabs for page: %@", log: debugLog, type: .debug, String(describing: page))
+        let timer = Timer(timeInterval: 1, repeats: false) { [weak page] thetimer in
+            if page != nil {
+                os_log("<<<< no tab returned for page: %@", log: self.debugLog, type: .debug, String(describing: page))
+            } else {
+                os_log("<<<< no tab returned for page: nil", log: self.debugLog, type: .debug)
+            }
+        }
         page.getContainingTab { tab in
+            if tab != nil {
+                os_log(">>>> found tab: %@", log: self.debugLog, type: .debug, String(describing: tab))
+            } else {
+                os_log(">>>> found nil tab", log: self.debugLog, type: .debug)
+            }
+            timer.invalidate()
             tab.navigate(to: kagiSearchURL)
         }
     }
