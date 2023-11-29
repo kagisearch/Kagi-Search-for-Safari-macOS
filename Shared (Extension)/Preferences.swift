@@ -11,16 +11,17 @@ struct SearchSource {
     let name: String
     let host: [String]
     let queryParameter: String
+    var systemIdentifier: String? = nil
     
     static let sources = [
         SearchSource(name: "All", host: [], queryParameter: ""),
-        SearchSource(name: "Google", host: ["google."], queryParameter: "q"),
-        SearchSource(name: "Yahoo", host: ["search.yahoo.com"], queryParameter: "p"),
-        SearchSource(name: "Bing", host: ["bing.", "bi.ng"], queryParameter: "q"),
-        SearchSource(name: "DuckDuckGo", host: ["duckduckgo.com"], queryParameter: "q"),
+        SearchSource(name: "Google", host: ["google."], queryParameter: "q", systemIdentifier: "com.google.www"),
+        SearchSource(name: "Yahoo", host: ["search.yahoo.com"], queryParameter: "p", systemIdentifier: "com.yahoo.www"),
+        SearchSource(name: "Bing", host: ["bing.", "bi.ng"], queryParameter: "q", systemIdentifier: "com.bing.www"),
+        SearchSource(name: "DuckDuckGo", host: ["duckduckgo.com"], queryParameter: "q", systemIdentifier: "com.duckduckgo"),
         SearchSource(name: "Baidu", host: ["baidu."], queryParameter: "wd"),
         SearchSource(name: "Yandex", host: ["yandex.", "ya."], queryParameter: "text"),
-        SearchSource(name: "Ecosia", host: ["ecosia.org"], queryParameter: "q"),
+        SearchSource(name: "Ecosia", host: ["ecosia.org"], queryParameter: "q", systemIdentifier: "org.ecosia.www"),
         SearchSource(name: "Brave", host: ["search.brave.com"], queryParameter: "q"),
         SearchSource(name: "Startpage", host: ["startpage.com"], queryParameter: "query"),
         SearchSource(name: "Neeva", host: ["neeva.com"], queryParameter: "q"),
@@ -30,6 +31,10 @@ struct SearchSource {
     
     static func named(_ engineName: String) -> SearchSource? {
         return Self.sources.first(where: { $0.name == engineName })
+    }
+    
+    static func withIdentifier(_ identifier: String) -> SearchSource? {
+        return Self.sources.first(where: { $0.systemIdentifier == identifier })
     }
 }
 
@@ -46,10 +51,6 @@ class Preferences: NSObject {
     
     private let defaults: UserDefaults?
     static private let NoProfileUUID = "NoProfileUUID"
-    
-    // Currently unused
-//    typealias ObservationCallback = (()->())
-//    private var observers = [String: [ObservationCallback]]()
     
     enum Keys: String, CaseIterable {
         case engine
@@ -69,13 +70,19 @@ class Preferences: NSObject {
         defaults?.set(engines, forKey: Keys.engine.rawValue)
     }
     
-    /// Default engine is Google
+    /// Default engine is Safari's default (if it can be detected), or Google
     func engine(for profile: UUID?) -> SearchSource? {
         if let engines = defaults?.dictionary(forKey: Keys.engine.rawValue) as? [String: String],
            let engineName = engines[uuidKey(for: profile)],
            let engine = SearchSource.named(engineName) {
             return engine
         }
+        
+        // Check system for Safari's default
+        if let systemProviderIdentifier = (defaults?.dictionary(forKey: "NSPreferredWebServices")?["NSWebServicesProviderWebSearch"] as? [String: Any])?["NSProviderIdentifier"] as? String {
+            return SearchSource.withIdentifier(systemProviderIdentifier)
+        }
+        
         return SearchSource.named("Google")
     }
     
@@ -90,6 +97,14 @@ class Preferences: NSObject {
            let link = links[uuidKey(for: profile)] {
             return link
         }
+        
+        // Check fallback from previous macOS extension defaults
+        if profile == nil,
+           let legacySessionlinkKey = UserDefaults.standard.string(forKey: "kagiSessionLink") {
+            setPrivateSessionLink(legacySessionlinkKey, profile: nil) // Don't assign this to a specific profile, to avoid accidentally using it in a profile where the user didn't expect it to be
+            return legacySessionlinkKey
+        }
+        
         return nil
     }
     
