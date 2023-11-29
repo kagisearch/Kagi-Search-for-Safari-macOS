@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+<!--    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">-->
+<!--    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src *; img-src 'self' data:">-->
+    <link rel="stylesheet" href="popup.css">
+    <script type="module" src="popup.js"></script>
+</head>
+<body>
+    <p>The Kagi extension is enabled for this site. <a href="#" id="open-app">Open the Kagi app</a> to update your extension settings.</p>
+    <p><a href="javascript:;" id="request-permissions">Request permissions</a></p>
+    
+    <p>
+        <b>Current permissions returned by the API:</b>
+        <span id="permissions"></span>
+    </p>
+</body>
+</html>
