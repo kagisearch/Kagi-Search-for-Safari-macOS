@@ -38,10 +38,6 @@ struct SearchSource {
     }
 }
 
-extension NSNotification.Name {
-    static let KagiSearchExtensionPreferenceUpdated = NSNotification.Name("KagiSearchExtensionPreferenceUpdated")
-}
-
 /// Helper for UserDefaults preference storage.
 ///
 /// All preferences are stored as a `[ProfileUUIDString: Object]` Dictionary.
@@ -49,15 +45,24 @@ class Preferences: NSObject {
     
     static let shared = Preferences()
     
-    private let defaults: UserDefaults?
+    let defaults: UserDefaults?
     static private let NoProfileUUID = "NoProfileUUID"
     
     enum Keys: String, CaseIterable {
         case engine
         case privateSessionLink
+        case checkedIfUpgradedFromLegacyExtension
+        case didUpgradeFromLegacyExtension
         
         static var allRawValues = allCases.map({ $0.rawValue })
+        var cfNotificationNameString: String {
+            "com.kagimacOS.Kagi-Search.PreferenceUpdateNotification.\(rawValue)"
+        }
+        var cfNotificationName: CFNotificationName {
+            CFNotificationName(cfNotificationNameString as NSString)
+        }
     }
+    static let PreferenceUpdatedNotificationKey = "PreferenceUpdatedNotificationKey"
     
     override init() {
         defaults = UserDefaults(suiteName: "group.kagi-search-for-safari")
@@ -93,23 +98,52 @@ class Preferences: NSObject {
     }
     
     func privateSessionLink(for profile: UUID?) -> String? {
-        if let links = defaults?.dictionary(forKey: Keys.privateSessionLink.rawValue) as? [String: String],
+        if let links = defaults?.privateSessionLinkWrapper,
            let link = links[uuidKey(for: profile)] {
             return link
         }
         
-        // Check fallback from previous macOS extension defaults
         if profile == nil,
            let legacySessionlinkKey = UserDefaults.standard.string(forKey: "kagiSessionLink") {
             setPrivateSessionLink(legacySessionlinkKey, profile: nil) // Don't assign this to a specific profile, to avoid accidentally using it in a profile where the user didn't expect it to be
+            CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), Keys.privateSessionLink.cfNotificationName, nil, nil, true)
             return legacySessionlinkKey
         }
         
         return nil
     }
     
+    var checkedIfUpgradedFromLegacyExtension: Bool {
+        get {
+            defaults?.bool(forKey: Keys.checkedIfUpgradedFromLegacyExtension.rawValue) == true
+        }
+        set {
+            defaults?.set(newValue, forKey: Keys.checkedIfUpgradedFromLegacyExtension.rawValue)
+        }
+    }
+    
+    var didUpgradeFromLegacyExtension: Bool? {
+        get {
+            let possibleBool = defaults?.object(forKey: Keys.didUpgradeFromLegacyExtension.rawValue)
+            if let possibleBool = possibleBool as? Bool {
+                return possibleBool
+            } else {
+                return nil
+            }
+        }
+        set {
+            defaults?.set(newValue, forKey: Keys.didUpgradeFromLegacyExtension.rawValue)
+        }
+    }
+    
     private func uuidKey(for profile: UUID?) -> String {
         return Self.NoProfileUUID // Can't access profile info from the app, so ignoring profiles for now
 //        return profile?.uuidString ?? Self.NoProfileUUID
+    }
+}
+
+extension UserDefaults {
+    @objc dynamic var privateSessionLinkWrapper: [String: String]? {
+        dictionary(forKey: Preferences.Keys.privateSessionLink.rawValue) as? [String: String]
     }
 }

@@ -25,6 +25,7 @@ class SafariWebExtensionHandler: ResponderObject, NSExtensionRequestHandling {
     #endif
     override init() {
         super.init()
+        UpgradeChecker.shared.startObservers()
     }
 
     func beginRequest(with context: NSExtensionContext) {

@@ -51,6 +51,40 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
         self.webView.configuration.userContentController.add(self, name: "controller")
 
         self.webView.loadFileURL(Bundle.main.url(forResource: "Main", withExtension: "html")!, allowingReadAccessTo: Bundle.main.resourceURL!)
+        
+        // Listen for updates to the private session link
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque()), { _, observer, _, _, _ in
+            guard let observer = observer else {
+                return
+            }
+            let currentPrivateSessionLink = Preferences.shared.privateSessionLink(for: nil) ?? ""
+            // Extract pointer to `self` from void pointer:
+            let unmanagedSelf = Unmanaged<ViewController>.fromOpaque(observer).takeUnretainedValue()
+            unmanagedSelf.webView.evaluateJavaScript("setCurrentPrivateSessionLink('\(currentPrivateSessionLink)')")
+        }, Preferences.Keys.privateSessionLink.cfNotificationNameString as CFString, nil, .hold)
+        
+        // Listen for updates to checks of whether the app is an upgrade or fresh install
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque()), { _, observer, _, _, _ in
+            guard let observer = observer else {
+                return
+            }
+            // Extract pointer to `self` from void pointer:
+            let unmanagedSelf = Unmanaged<ViewController>.fromOpaque(observer).takeUnretainedValue()
+            
+            if Preferences.shared.didUpgradeFromLegacyExtension == true {
+                print("*** this was an upgrade!")
+            } else {
+                print("*** not an upgrade")
+            }
+            unmanagedSelf.webView.evaluateJavaScript("alert('alert shown');")
+        }, UpgradeChecker.ResponseNotificationName as CFString, nil, .hold)
+        
+        checkIfUpgraded()
+        
+    }
+    
+    deinit {
+        CFNotificationCenterRemoveEveryObserver(CFNotificationCenterGetDarwinNotifyCenter(), UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque()))
     }
 #if os(iOS)
     override func viewDidAppear(_ animated: Bool) {
@@ -226,6 +260,9 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
             }
 
             DispatchQueue.main.async { [weak self] in
+                if state.isEnabled {
+                    self?.checkIfUpgraded()
+                }
                 if #available(macOS 13, *) {
                     self?.webView.evaluateJavaScript("show('mac', \(state.isEnabled), true)")
                 } else {
@@ -235,5 +272,19 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
         }
     }
     #endif
+    
+    private func checkIfUpgraded(timeout: TimeInterval = 5) {
+        // Check if this was an upgrade or a fresh install
+        if Preferences.shared.checkedIfUpgradedFromLegacyExtension {
+            print("*** already checked if this was an upgrade. It was\(Preferences.shared.didUpgradeFromLegacyExtension == true ? "" : " not")")
+        } else {
+            Timer.scheduledTimer(withTimeInterval: timeout, repeats: false) { [weak self] timer in
+                if Preferences.shared.checkedIfUpgradedFromLegacyExtension == false {
+                    self?.checkIfUpgraded(timeout: min(30.0, timeout + 5)) // Keep checking if this was an upgrade until the extension is available and returns an answer
+                }
+            }
+            CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFNotificationName(UpgradeChecker.RequestNotificationName), nil, nil, true)
+        }
+    }
 
 }
