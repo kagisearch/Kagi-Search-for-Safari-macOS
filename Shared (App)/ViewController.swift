@@ -18,7 +18,7 @@ typealias PlatformViewController = NSViewController
 typealias Image = NSImage
 #endif
 
-let extensionBundleIdentifier = "com.kagimacOS.Kagi-Search.WebExtension"
+let extensionBundleIdentifier = "com.kagimacOS.Kagi-Search.Extension"
 let appWindowFrameAutosaveName = "KagiSearchForSafariWindowFrame"
 
 class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMessageHandler {
@@ -63,24 +63,10 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
             unmanagedSelf.webView.evaluateJavaScript("setCurrentPrivateSessionLink('\(currentPrivateSessionLink)')")
         }, Preferences.Keys.privateSessionLink.cfNotificationNameString as CFString, nil, .hold)
         
-        // Listen for updates to checks of whether the app is an upgrade or fresh install
-        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque()), { _, observer, _, _, _ in
-            guard let observer = observer else {
-                return
-            }
-            // Extract pointer to `self` from void pointer:
-            let unmanagedSelf = Unmanaged<ViewController>.fromOpaque(observer).takeUnretainedValue()
-            
-            if Preferences.shared.didUpgradeFromLegacyExtension == true {
-                print("*** this was an upgrade!")
-            } else {
-                print("*** not an upgrade")
-            }
-            unmanagedSelf.webView.evaluateJavaScript("alert('alert shown');")
-        }, UpgradeChecker.ResponseNotificationName as CFString, nil, .hold)
-        
+        #if os(macOS)
+        addUpgradeCheckObservers()
         checkIfUpgraded()
-        
+        #endif
     }
     
     deinit {
@@ -245,11 +231,7 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
                 "currentEngine": currentEngine.name,
                 "privateSessionLink": Preferences.shared.privateSessionLink(for: nil) ?? ""
             ]) { error in
-//                DispatchQueue.main.async {
-//                    Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] _ in
-//                        self?.webView.evaluateJavaScript("document.querySelector('button.sync-with-safari').innerText = 'Sync Data to Safari';")
-//                    }
-//                }
+
         }
     }
     func detectMacOSExtensionStateChange() {
@@ -271,20 +253,56 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
             }
         }
     }
-    #endif
+    
+    private func addUpgradeCheckObservers() {
+        // Listen for updates to checks of whether the app is an upgrade or fresh install
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque()), { _, observer, _, _, _ in
+            // No-op
+        }, UpgradeChecker.ResponseNotificationName as CFString, nil, .hold)
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque()), { _, observer, _, _, _ in
+            guard let observer = observer else {
+                return
+            }
+            // Extract pointer to `self` from void pointer:
+            let unmanagedSelf = Unmanaged<ViewController>.fromOpaque(observer).takeUnretainedValue()
+            
+            if Preferences.shared.didUpgradeFromLegacyExtension == true {
+                unmanagedSelf.showUpgradeAlert()
+            }
+            
+        }, UpgradeChecker.FirstResponseNotificationName as CFString, nil, .hold)
+    }
     
     private func checkIfUpgraded(timeout: TimeInterval = 5) {
         // Check if this was an upgrade or a fresh install
-        if Preferences.shared.checkedIfUpgradedFromLegacyExtension {
-            print("*** already checked if this was an upgrade. It was\(Preferences.shared.didUpgradeFromLegacyExtension == true ? "" : " not")")
-        } else {
-            Timer.scheduledTimer(withTimeInterval: timeout, repeats: false) { [weak self] timer in
-                if Preferences.shared.checkedIfUpgradedFromLegacyExtension == false {
-                    self?.checkIfUpgraded(timeout: min(30.0, timeout + 5)) // Keep checking if this was an upgrade until the extension is available and returns an answer
-                }
-            }
-            CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFNotificationName(UpgradeChecker.RequestNotificationName), nil, nil, true)
+        guard !Preferences.shared.checkedIfUpgradedFromLegacyExtension else {
+             // Already checked, moving on
+            return
         }
+        Timer.scheduledTimer(withTimeInterval: timeout, repeats: false) { [weak self] timer in
+            if Preferences.shared.checkedIfUpgradedFromLegacyExtension == false {
+                self?.checkIfUpgraded(timeout: min(30.0, timeout + 5)) // Keep checking if this was an upgrade until the extension is available and returns an answer
+            }
+        }
+        CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFNotificationName(UpgradeChecker.RequestNotificationName), nil, nil, true)
     }
+    
+    private func showUpgradeAlert() {
+        guard let screenshotImage = NSImage(named: "PermissionsPopup") else { return }
+        let alert = NSAlert()
+        alert.messageText = "Upgraded Kagi Extension"
+        alert.informativeText = """
+            When you run your first search from the Safari location bar, you will need to re-grant permissions to the extension by clicking on the Kagi Extension icon in the Safari toolbar.
+        """
+        
+        let screenshotImageView = NSImageView(image: screenshotImage)
+        screenshotImageView.frame = NSRect(origin: screenshotImageView.frame.origin, size: CGSize(width: 400, height: 291))
+        alert.accessoryView = screenshotImageView
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+    }
+    #endif
 
 }
+

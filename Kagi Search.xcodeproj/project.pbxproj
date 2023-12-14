@@ -10,6 +10,7 @@
 		3E1A51362B1734B70010A4C4 /* Kagi Search Extension iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3ED5D48F2B0DE087009DDDAD /* Kagi Search Extension iOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3E1A513B2B180B890010A4C4 /* UpgradeChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1A513A2B180B890010A4C4 /* UpgradeChecker.swift */; };
 		3E1A513C2B180CBE0010A4C4 /* UpgradeChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1A513A2B180B890010A4C4 /* UpgradeChecker.swift */; };
+		3EC41D242B21B587009B17FE /* macOS Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EC41D232B21B587009B17FE /* macOS Assets.xcassets */; };
 		3ED5D4C52B0DE2BD009DDDAD /* Kagi Search Extension macOS.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3ED5D4AC2B0DE2BD009DDDAD /* Kagi Search Extension macOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3ED5D4E82B0DE3AF009DDDAD /* Kagi_Search__iOS_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED5D4E72B0DE3AF009DDDAD /* Kagi_Search__iOS_Tests.swift */; };
 		3ED5D4F22B0DE3AF009DDDAD /* Kagi_Search__iOS_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED5D4F12B0DE3AF009DDDAD /* Kagi_Search__iOS_UITests.swift */; };
@@ -141,6 +142,7 @@
 
 /* Begin PBXFileReference section */
 		3E1A513A2B180B890010A4C4 /* UpgradeChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeChecker.swift; sourceTree = "<group>"; };
+		3EC41D232B21B587009B17FE /* macOS Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "macOS Assets.xcassets"; sourceTree = "<group>"; };
 		3ED5D48F2B0DE087009DDDAD /* Kagi Search Extension iOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Kagi Search Extension iOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED5D4AC2B0DE2BD009DDDAD /* Kagi Search Extension macOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Kagi Search Extension macOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED5D4C92B0DE324009DDDAD /* Kagi Search Extension (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Kagi Search Extension (iOS).entitlements"; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 				3ED5D5022B0DE6A5009DDDAD /* AppDelegate.swift */,
 				3ED5D5032B0DE6A5009DDDAD /* NSImage+Helpers.swift */,
 				3ED5D5042B0DE6A5009DDDAD /* Kagi Search (macOS).entitlements */,
+				3EC41D232B21B587009B17FE /* macOS Assets.xcassets */,
 			);
 			path = "Kagi Search (macOS)";
 			sourceTree = "<group>";
@@ -662,6 +665,7 @@
 				3ED5D5482B0DE707009DDDAD /* select_safari_engine.png in Resources */,
 				3ED5D5422B0DE707009DDDAD /* ios_enable_extension.png in Resources */,
 				3ED5D5382B0DE707009DDDAD /* Script.js in Resources */,
+				3EC41D242B21B587009B17FE /* macOS Assets.xcassets in Resources */,
 				3ED5D5892B0DF6BC009DDDAD /* Main.html in Resources */,
 				3ED5D54E2B0DE707009DDDAD /* Assets.xcassets in Resources */,
 				3ED5D53A2B0DE707009DDDAD /* grant_permissions.png in Resources */,
@@ -991,6 +995,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kagimacOS.Kagi-Search";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1031,6 +1038,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kagimacOS.Kagi-Search";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -8,7 +8,7 @@
 import SafariServices
 import os.log
 
-let extensionBundleIdentifier = "com.kagi.Kagi-Search-for-Safari.Extension"
+let extensionBundleIdentifier = "com.kagimacOS.Kagi-Search.Extension"
 
 #if os(macOS)
 typealias ResponderObject = NSObject
@@ -19,13 +19,16 @@ typealias ResponderObject = UIResponder
 class SafariWebExtensionHandler: ResponderObject, NSExtensionRequestHandling {
     
     #if os(macOS)
-    private static let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.kagi.Kagi-Search-for-Safari")
+    private static let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.kagimacOS.Kagi-Search")
     #elseif os(iOS)
     private static let appURL = URL(string: "kagisearch://")
     #endif
+    
     override init() {
         super.init()
+        #if os(macOS)
         UpgradeChecker.shared.startObservers()
+        #endif
     }
 
     func beginRequest(with context: NSExtensionContext) {
@@ -68,7 +71,7 @@ class SafariWebExtensionHandler: ResponderObject, NSExtensionRequestHandling {
             responseData["currentEngine"] = currentEngine.name
         case "openApp":
             if let appURL = Self.appURL {
-                openAppURL(appURL)
+                openAppURL(appURL, context: context)
                 responseData["type"] = "openAppSuccess"
             } else {
                 responseData["type"] = "openAppFailure"
@@ -87,7 +90,7 @@ class SafariWebExtensionHandler: ResponderObject, NSExtensionRequestHandling {
         return
     }
 
-    func openAppURL(_ url: URL) {
+    func openAppURL(_ url: URL, context: NSExtensionContext? = nil) {
         #if os(macOS)
         if #available(macOSApplicationExtension 10.15, *) {
             NSWorkspace.shared.openApplication(at: url, configuration: .init(), completionHandler: { runningApp, error in
@@ -98,16 +101,22 @@ class SafariWebExtensionHandler: ResponderObject, NSExtensionRequestHandling {
             // Fallback on earlier versions
         }
         #elseif os(iOS)
-        var responder: ResponderObject? = self
-        let selector = #selector(SafariWebExtensionHandler.openURL(_:))
-
-        while responder != nil {
-            if responder!.responds(to: selector) && responder != self {
-                responder!.perform(selector, with: url)
-                return
-            }
-            responder = responder?.next
+        let selector = #selector(NSExtensionContext.open(_:completionHandler:))
+//        var responder: ResponderObject? = self
+//        let selector = #selector(SafariWebExtensionHandler.openURL(_:))
+        if context?.responds(to: selector) == true {
+//            context?.perform(selector, with: url)
+            context?.open(url)
         }
+
+//        while responder != nil {
+////            if responder!.responds(to: selector) && responder != self {
+//            if responder!.responds(to: selector) {
+//                responder!.perform(selector, with: url)
+//                return
+//            }
+//            responder = responder?.next
+//        }
         #endif
         
     }
