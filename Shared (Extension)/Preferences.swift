@@ -104,7 +104,7 @@ class Preferences: NSObject {
         }
         
         if profile == nil,
-           let legacySessionlinkKey = UserDefaults.standard.string(forKey: "kagiSessionLink") {
+           let legacySessionlinkKey = UserDefaults.standard.string(forKey: "kagiSessionLink")?.replacingOccurrences(of: "&q=%s", with: "") {
             setPrivateSessionLink(legacySessionlinkKey, profile: nil) // Don't assign this to a specific profile, to avoid accidentally using it in a profile where the user didn't expect it to be
             CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), Keys.privateSessionLink.cfNotificationName, nil, nil, true)
             return legacySessionlinkKey
