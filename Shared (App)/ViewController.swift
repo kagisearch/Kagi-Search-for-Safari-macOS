@@ -18,7 +18,7 @@ typealias PlatformViewController = NSViewController
 typealias Image = NSImage
 #endif
 
-let extensionBundleIdentifier = "com.kagimacOS.Kagi-Search.Extension"
+let macExtensionBundleIdentifier = "com.kagimacOS.Kagi-Search.Extension"
 let appWindowFrameAutosaveName = "KagiSearchForSafariWindowFrame"
 
 class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMessageHandler {
@@ -121,7 +121,7 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
         switch messageAction {
         case "open-preferences":
             #if os(macOS)
-            SFSafariApplication.showPreferencesForExtension(withIdentifier: extensionBundleIdentifier) { error in
+            SFSafariApplication.showPreferencesForExtension(withIdentifier: macExtensionBundleIdentifier) { error in
                 guard error == nil else {
                     // TODO: Insert code to inform the user that something went wrong.
                     return
@@ -227,7 +227,7 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
         guard let currentEngine = Preferences.shared.engine(for: nil) else {
             return
         }
-        SFSafariApplication.dispatchMessage(withName: "syncData", toExtensionWithIdentifier: extensionBundleIdentifier, userInfo: [
+        SFSafariApplication.dispatchMessage(withName: "syncData", toExtensionWithIdentifier: macExtensionBundleIdentifier, userInfo: [
                 "currentEngine": currentEngine.name,
                 "privateSessionLink": Preferences.shared.privateSessionLink(for: nil) ?? ""
             ]) { error in
@@ -235,7 +235,7 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
         }
     }
     func detectMacOSExtensionStateChange() {
-        SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: extensionBundleIdentifier) { (state, error) in
+        SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: macExtensionBundleIdentifier) { (state, error) in
             guard let state = state, error == nil else {
                 // Insert code to inform the user that something went wrong.
                 return

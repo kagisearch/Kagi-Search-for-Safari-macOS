@@ -8,8 +8,6 @@
 import SafariServices
 import os.log
 
-let extensionBundleIdentifier = "com.kagimacOS.Kagi-Search.Extension"
-
 #if os(macOS)
 typealias ResponderObject = NSObject
 #elseif os(iOS)
