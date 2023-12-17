@@ -76,6 +76,11 @@ class SafariWebExtensionHandler: ResponderObject, NSExtensionRequestHandling {
                 responseData["errorMessage"] = "Kagi app not found"
             }
             break
+        case "migratePrivateSessionLink":
+                if let previousPrivateSessionLink = messageDict["privateSessionLink"] as? String {
+                    Preferences.shared.setPrivateSessionLink(previousPrivateSessionLink, profile: nil)
+                }
+            break
         default:
             break
         }

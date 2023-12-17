@@ -505,6 +505,21 @@ browser.action.onClicked.addListener((tab) => {
     });
 });
 
+browser.runtime.onInstalled.addListener(function(details){
+    if (!(details.previousVersion.startsWith("1") == true && browser.runtime.getManifest().version.startsWith("2") == true)) {
+        return
+    }
+    
+    browser.storage.local.get("privateSessionLink", function(value) {
+        var privateSessionLink = value.privateSessionLink;
+        if (typeof(privateSessionLink) !== "undefined") {
+            browser.runtime.sendNativeMessage(extensionId, {"type": "migratePrivateSessionLink", "privateSessionLink": privateSessionLink}, function(response){
+                // no-op
+            });
+        }
+    });
+});
+
 // Checks every 5 seconds for a new engine. There's no other way to get new
 // info from the app without forcing Safari to come to the foreground
 (function loop() {
