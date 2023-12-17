@@ -8,7 +8,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.kagimacOS.Kagi-Search</string>
+			<string>com.kagi.searchExtensionContainer</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>kagisearch</string>

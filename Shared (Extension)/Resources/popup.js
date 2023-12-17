@@ -1,12 +1,3 @@
-const extensionId = "com.kagi.Kagi-Search-for-Safari.Extension (TFVG979488)";
-document.getElementById("open-app").onclick = function() {
-    browser.runtime.sendNativeMessage(extensionId, {"type": "openApp"}, function(response) {
-        window.close();
-    });
-}
-
-
-
 const googleUrls = {
     "google.com.au": "q",
     "google.md": "q",
@@ -202,20 +193,109 @@ const googleUrls = {
     "google.com.eg": "q",
     "google.com.ng": "q"
 };
+const yandexUrls = {
+    "yandex.ru": "text",
+    "yandex.org": "text",
+    "yandex.net": "text",
+    "yandex.net.ru": "text",
+    "yandex.com.ru": "text",
+    "yandex.ua": "text",
+    "yandex.com.ua": "text",
+    "yandex.by": "text",
+    "yandex.eu": "text",
+    "yandex.ee": "text",
+    "yandex.lt": "text",
+    "yandex.lv": "text",
+    "yandex.md": "text",
+    "yandex.uz": "text",
+    "yandex.mx": "text",
+    "yandex.do": "text",
+    "yandex.tm": "text",
+    "yandex.de": "text",
+    "yandex.ie": "text",
+    "yandex.in": "text",
+    "yandex.qa": "text",
+    "yandex.so": "text",
+    "yandex.nu": "text",
+    "yandex.tj": "text",
+    "yandex.dk": "text",
+    "yandex.es": "text",
+    "yandex.pt": "text",
+    "yandex.pl": "text",
+    "yandex.lu": "text",
+    "yandex.it": "text",
+    "yandex.az": "text",
+    "yandex.ro": "text",
+    "yandex.rs": "text",
+    "yandex.sk": "text",
+    "yandex.no": "text",
+    "ya.ru": "text",
+    "yandex.com": "text",
+    "yandex.asia": "text",
+    "yandex.mobi": "text"
+};
+const ddgUrls = {
+    "duckduckgo.com": "q",
+    "duckduckgo.pl": "q",
+    "duckduckgo.jp": "q",
+    "duckduckgo.co": "q",
+    "duckduckco.de": "q",
+    "duckduckgo.ca": "q",
+    "duckduckgo.co.uk": "q",
+    "duckduckgo.com.mx": "q",
+    "duckduckgo.com.tw": "q",
+    "duckduckgo.dk": "q",
+    "duckduckgo.in": "q",
+    "duckduckgo.ke": "q",
+    "duckduckgo.mx": "q",
+    "duckduckgo.nl": "q",
+    "duckduckgo.org": "q",
+    "duckduckgo.sg": "q",
+    "duckduckgo.uk": "q",
+    "duckgo.com": "q",
+    "ddg.co": "q",
+    "ddg.gg": "q",
+    "duck.co": "q",
+    "duck.com": "q"
+};
+const bingUrls = {
+    "bing.com": "q"
+};
+const baiduUrls = {
+    "baidu.com": "wd",
+    "m.baidu.com": "word"
+};
+const sogouUrls = {
+    "sogou.com": "query",
+    "m.sogou.com": "keyword",
+    "m.so.com": "q",
+    "so.com": "q"
+};
+const ecosiaUrls = {
+    "ecosia.org": "q"
+};
+const yahooUrls = {
+    "search.yahoo.com": "p"
+};
+const engineHosts = Object.keys(Object.assign({}, googleUrls, yandexUrls, ddgUrls, bingUrls, baiduUrls, sogouUrls, ecosiaUrls, yahooUrls));
 
-document.getElementById("request-permissions").onclick = function() {
-    var permissionsToRequest = {
-        permissions: ["webNavigation"],
-        origins: Object.keys(googleUrls).map((host) => ("*://" + host + "/*"))
+const extensionId = "com.kagi.Kagi-Search-for-Safari.Extension (TFVG979488)";
+const userAgent = window.navigator.userAgent,
+      platform = window.navigator?.userAgentData?.platform || window.navigator.platform,
+      macosPlatforms = ['macOS', 'Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+      iosPlatforms = ['iPhone', 'iPad', 'iPod'];
+document.getElementById("open-app").onclick = function() {
+    if (macosPlatforms.indexOf(platform) !== -1) {
+        browser.runtime.sendNativeMessage(extensionId, {"type": "openApp"}, function(response) {
+            window.close();
+        });
+    } else if (iosPlatforms.indexOf(platform) !== -1) {
+        window.open("kagisearch://")
     }
-    browser.permissions.request(permissionsToRequest);
 }
-
-function updatePermissions() {
-  browser.permissions.getAll()
-  .then((permissions) => {
-    document.getElementById('permissions').innerText = permissions.permissions.join(', ');
-  });
-}
-
-updatePermissions();
+document.addEventListener("DOMContentLoaded", (event) => {
+    browser.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
+        let url = new URL(tabs[0].url);
+        document.getElementById("currentHost").innerText = url.hostname;
+    });
+});
