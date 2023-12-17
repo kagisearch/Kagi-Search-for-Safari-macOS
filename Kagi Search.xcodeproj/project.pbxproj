@@ -199,6 +199,7 @@
 		3EC772502B2C48CE00E40354 /* Kagi Search iOS copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Kagi Search iOS copy-Info.plist"; path = "/Users/nano/Kagi/kagi-for-safari-macos/Kagi Search iOS copy-Info.plist"; sourceTree = "<absolute>"; };
 		3EC772612B2C492F00E40354 /* Kagi Search Extension iOS Legacy.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Kagi Search Extension iOS Legacy.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EC772622B2C492F00E40354 /* Kagi Search Extension iOS copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Kagi Search Extension iOS copy-Info.plist"; path = "/Users/nano/Kagi/kagi-for-safari-macos/Kagi Search Extension iOS copy-Info.plist"; sourceTree = "<absolute>"; };
+		3EC772662B2F904200E40354 /* Kagi-Search-macOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Kagi-Search-macOS-Info.plist"; sourceTree = "<group>"; };
 		3ED5D48F2B0DE087009DDDAD /* Kagi Search Extension iOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Kagi Search Extension iOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED5D4AC2B0DE2BD009DDDAD /* Kagi Search Extension macOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Kagi Search Extension macOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED5D4C92B0DE324009DDDAD /* Kagi Search Extension (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Kagi Search Extension (iOS).entitlements"; sourceTree = "<group>"; };
@@ -442,6 +443,7 @@
 		C31E69142823DD4E00B1491B = {
 			isa = PBXGroup;
 			children = (
+				3EC772662B2F904200E40354 /* Kagi-Search-macOS-Info.plist */,
 				C39A9F7028588C0100E4C0A3 /* MainConfig.xcconfig */,
 				3ED5D5772B0DE75F009DDDAD /* iOS (Extension) */,
 				3ED5D5792B0DE75F009DDDAD /* macOS (Extension) */,
@@ -1330,7 +1332,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Kagi Search (iOS)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Kagi;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1374,7 +1375,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Kagi Search (iOS)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Kagi;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1633,6 +1633,7 @@
 				DEVELOPMENT_TEAM = TFVG979488;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Kagi-Search-macOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Kagi Search for Safari";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Kagi Search is a quick, user-centric, 100% privacy-respecting search engine with results augmented by non-commercial indexes and personalized searches.";
@@ -1672,6 +1673,7 @@
 				DEVELOPMENT_TEAM = TFVG979488;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Kagi-Search-macOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Kagi Search for Safari";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Kagi Search is a quick, user-centric, 100% privacy-respecting search engine with results augmented by non-commercial indexes and personalized searches.";
