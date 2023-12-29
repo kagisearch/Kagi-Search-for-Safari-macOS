@@ -429,9 +429,15 @@ function updateEngine(engine) {
 
 function updatePrivateSessionLink(link) {
     if (link.trim().length > 0) {
+        // set variable used in current browsing session
         kagiPrivateSearchTemplate = link + "&q=%s";
+        // cache it in browser storage so we have an available
+        // link as soon as background.js is loaded, otherwise user's
+        // first private browsing search will be logged-out and fail
+        browser.storage.local.set({ kagiPrivateSessionLink: link });
     } else {
         kagiPrivateSearchTemplate = "";
+        browser.storage.local.set({ kagiPrivateSessionLink: "" });
     }
 }
 
@@ -475,10 +481,12 @@ requestCurrentEngineFromApp();
 requestPrivateSessionLinkFromApp();
 
 browser.runtime.onInstalled.addListener(function(details){
+    
+    // Checks for upgrade from 1.x to 2.x. If so, attempts to migrate
+    // the privateSessionLink url from the previous extension
     if (!(details.previousVersion.startsWith("1") == true && browser.runtime.getManifest().version.startsWith("2") == true)) {
         return
     }
-    
     browser.storage.local.get("privateSessionLink", function(value) {
         var privateSessionLink = value.privateSessionLink;
         if (typeof(privateSessionLink) !== "undefined") {
@@ -487,6 +495,15 @@ browser.runtime.onInstalled.addListener(function(details){
             });
         }
     });
+});
+
+// Check for a private session link at startup so that the first search
+// in a private window or tab doesn't fail
+browser.storage.local.get("kagiPrivateSessionLink", function(value) {
+    var link = value.kagiPrivateSessionLink;
+    if (typeof(link) !== "undefined") {
+        updatePrivateSessionLink(link);
+    }
 });
 
 // Checks every 5 seconds for a new engine. There's no other way to get new
