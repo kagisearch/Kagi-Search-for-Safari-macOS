@@ -293,9 +293,3 @@ document.getElementById("open-app").onclick = function() {
         window.open("kagisearch://")
     }
 }
-document.addEventListener("DOMContentLoaded", (event) => {
-    browser.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
-        let url = new URL(tabs[0].url);
-        document.getElementById("currentHost").innerText = url.hostname;
-    });
-});
