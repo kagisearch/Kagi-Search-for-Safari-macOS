@@ -10,6 +10,9 @@
 		3E1A51362B1734B70010A4C4 /* Kagi Search Extension iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3ED5D48F2B0DE087009DDDAD /* Kagi Search Extension iOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3E1A513B2B180B890010A4C4 /* UpgradeChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1A513A2B180B890010A4C4 /* UpgradeChecker.swift */; };
 		3E1A513C2B180CBE0010A4C4 /* UpgradeChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1A513A2B180B890010A4C4 /* UpgradeChecker.swift */; };
+		3E9DF5082B3E3E70005DF2C3 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D55B2B0DE720009DDDAD /* manifest.json */; };
+		3E9DF5092B3E3E71005DF2C3 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D55B2B0DE720009DDDAD /* manifest.json */; };
+		3E9DF50A2B3E3E72005DF2C3 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D55B2B0DE720009DDDAD /* manifest.json */; };
 		3EC41D242B21B587009B17FE /* macOS Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EC41D232B21B587009B17FE /* macOS Assets.xcassets */; };
 		3EC772302B2C48CE00E40354 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED5D52B2B0DE707009DDDAD /* ViewController.swift */; };
 		3EC772312B2C48CE00E40354 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED5D50A2B0DE6CC009DDDAD /* AppDelegate.swift */; };
@@ -41,7 +44,6 @@
 		3EC772582B2C492F00E40354 /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D58D2B0DFC34009DDDAD /* _locales */; };
 		3EC772592B2C492F00E40354 /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D55A2B0DE720009DDDAD /* popup.html */; };
 		3EC7725A2B2C492F00E40354 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D5562B0DE720009DDDAD /* background.js */; };
-		3EC7725B2B2C492F00E40354 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D55B2B0DE720009DDDAD /* manifest.json */; };
 		3EC7725C2B2C492F00E40354 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D5902B0DFC81009DDDAD /* images */; };
 		3EC7725D2B2C492F00E40354 /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D5552B0DE720009DDDAD /* popup.js */; };
 		3EC772632B2C4F8A00E40354 /* Kagi Search Extension iOS Legacy.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3EC772612B2C492F00E40354 /* Kagi Search Extension iOS Legacy.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -103,8 +105,6 @@
 		3ED5D5682B0DE720009DDDAD /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D5562B0DE720009DDDAD /* background.js */; };
 		3ED5D56D2B0DE720009DDDAD /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D55A2B0DE720009DDDAD /* popup.html */; };
 		3ED5D56E2B0DE720009DDDAD /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D55A2B0DE720009DDDAD /* popup.html */; };
-		3ED5D56F2B0DE720009DDDAD /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D55B2B0DE720009DDDAD /* manifest.json */; };
-		3ED5D5702B0DE720009DDDAD /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D55B2B0DE720009DDDAD /* manifest.json */; };
 		3ED5D5712B0DE720009DDDAD /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D55C2B0DE720009DDDAD /* popup.css */; };
 		3ED5D5722B0DE720009DDDAD /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D55C2B0DE720009DDDAD /* popup.css */; };
 		3ED5D5892B0DF6BC009DDDAD /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D5872B0DF6BC009DDDAD /* Main.html */; };
@@ -115,7 +115,6 @@
 		3ED5D58F2B0DFC34009DDDAD /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D58D2B0DFC34009DDDAD /* _locales */; };
 		3ED5D5912B0DFC81009DDDAD /* images in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D5902B0DFC81009DDDAD /* images */; };
 		3ED5D5922B0DFC81009DDDAD /* images in Resources */ = {isa = PBXBuildFile; fileRef = 3ED5D5902B0DFC81009DDDAD /* images */; };
-		C39A9F7128588C0100E4C0A3 /* MainConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C39A9F7028588C0100E4C0A3 /* MainConfig.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -725,10 +724,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EC772572B2C492F00E40354 /* popup.css in Resources */,
+				3E9DF50A2B3E3E72005DF2C3 /* manifest.json in Resources */,
 				3EC772582B2C492F00E40354 /* _locales in Resources */,
 				3EC772592B2C492F00E40354 /* popup.html in Resources */,
 				3EC7725A2B2C492F00E40354 /* background.js in Resources */,
-				3EC7725B2B2C492F00E40354 /* manifest.json in Resources */,
 				3EC7725C2B2C492F00E40354 /* images in Resources */,
 				3EC7725D2B2C492F00E40354 /* popup.js in Resources */,
 			);
@@ -739,10 +738,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3ED5D5712B0DE720009DDDAD /* popup.css in Resources */,
+				3E9DF5082B3E3E70005DF2C3 /* manifest.json in Resources */,
 				3ED5D58E2B0DFC34009DDDAD /* _locales in Resources */,
 				3ED5D56D2B0DE720009DDDAD /* popup.html in Resources */,
 				3ED5D5672B0DE720009DDDAD /* background.js in Resources */,
-				3ED5D56F2B0DE720009DDDAD /* manifest.json in Resources */,
 				3ED5D5912B0DFC81009DDDAD /* images in Resources */,
 				3ED5D5652B0DE720009DDDAD /* popup.js in Resources */,
 			);
@@ -753,10 +752,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3ED5D5722B0DE720009DDDAD /* popup.css in Resources */,
+				3E9DF5092B3E3E71005DF2C3 /* manifest.json in Resources */,
 				3ED5D58F2B0DFC34009DDDAD /* _locales in Resources */,
 				3ED5D56E2B0DE720009DDDAD /* popup.html in Resources */,
 				3ED5D5682B0DE720009DDDAD /* background.js in Resources */,
-				3ED5D5702B0DE720009DDDAD /* manifest.json in Resources */,
 				3ED5D5922B0DFC81009DDDAD /* images in Resources */,
 				3ED5D5662B0DE720009DDDAD /* popup.js in Resources */,
 			);
@@ -809,7 +808,6 @@
 			files = (
 				3ED5D5462B0DE707009DDDAD /* allow_private_browsing.png in Resources */,
 				3ED5D54A2B0DE707009DDDAD /* ios_select_safari_engine.png in Resources */,
-				C39A9F7128588C0100E4C0A3 /* MainConfig.xcconfig in Resources */,
 				3ED5D5402B0DE707009DDDAD /* Style.css in Resources */,
 				3ED5D5062B0DE6A5009DDDAD /* Main.storyboard in Resources */,
 				3ED5D5362B0DE707009DDDAD /* ios_private_browsing.png in Resources */,

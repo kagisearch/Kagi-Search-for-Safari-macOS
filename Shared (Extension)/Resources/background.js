@@ -281,6 +281,7 @@ const builtInEngines = Object.assign({}, googleUrls, yandexUrls, ddgUrls, bingUr
 const www = "www.";
 const yahoo = "search.yahoo.com";
 const extensionId = "com.kagi.Kagi-Search-for-Safari.Extension (TFVG979488)";
+
 var ua = {},
     tg = "0",
     pt = 0,
@@ -448,32 +449,6 @@ function requestPrivateSessionLinkFromApp() {
     });
 }
 
-function updateBadge() {
-    return;
-    var currentTabInfo;
-    browser.tabs.getCurrent()
-    .then(function(tabInfo) {
-        currentTabInfo = tabInfo;
-        return browser.action.getBadgeText({ tabId: currentTabInfo.id });
-    })
-    .then(function(currentText) {
-        console.log(currentText);
-        if (currentText == "!" || currentText == "" ) {
-            return browser.action.setBadgeText({ tabId: currentTabInfo.id, text: "$" });
-        } else {
-            return browser.action.setBadgeText({ tabId: currentTabInfo.id, text: "!" });
-        }
-    });
-}
-
-function tabIsPrivate(tab) {
-    if (tab != null) {
-        let window = browser.window.get(tab.windowId);
-        return window.isPrivate;
-    }
-    return false;
-}
-
 var defaultFilter = {
     url: Object.keys(builtInEngines).flatMap(function(a) {
         return [{
@@ -499,12 +474,6 @@ browser.webNavigation.onBeforeNavigate.addListener(checkForSearch, defaultFilter
 requestCurrentEngineFromApp();
 requestPrivateSessionLinkFromApp();
 
-browser.action.onClicked.addListener((tab) => {
-    browser.runtime.sendNativeMessage(extensionId, {"type": "openApp"}, function(response) {
-        window.close();
-    });
-});
-
 browser.runtime.onInstalled.addListener(function(details){
     if (!(details.previousVersion.startsWith("1") == true && browser.runtime.getManifest().version.startsWith("2") == true)) {
         return
@@ -526,7 +495,6 @@ browser.runtime.onInstalled.addListener(function(details){
   setTimeout(() => {
       requestCurrentEngineFromApp();
       requestPrivateSessionLinkFromApp();
-      updateBadge();
-    loop();
+      loop();
   }, 5000);
 })();
