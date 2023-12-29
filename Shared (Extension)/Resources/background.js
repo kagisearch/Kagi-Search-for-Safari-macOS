@@ -418,11 +418,11 @@ function updateEngine(engine) {
             return filters;
         })
     };
-    var permissionsToRequest = {
-        permissions: ["webNavigation"],
-        origins: Object.keys(newFilterUrls).map((host) => ("*://" + host + "/*"))
-    }
-    browser.permissions.request(permissionsToRequest);
+//    var permissionsToRequest = {
+//        permissions: ["webNavigation"],
+//        origins: Object.keys(newFilterUrls).map((host) => ("*://" + host + "/*"))
+//    }
+//    browser.permissions.request(permissionsToRequest);
     browser.webNavigation.onBeforeNavigate.removeListener(checkForSearch);
     browser.webNavigation.onBeforeNavigate.addListener(checkForSearch, newFilter);
 }
