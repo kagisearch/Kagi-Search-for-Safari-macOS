@@ -251,7 +251,7 @@
 		3ED5D5882B0DF6BC009DDDAD /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = "Shared (App)/Base.lproj/Main.html"; sourceTree = SOURCE_ROOT; };
 		3ED5D58D2B0DFC34009DDDAD /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; path = _locales; sourceTree = "<group>"; };
 		3ED5D5902B0DFC81009DDDAD /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
-		C31E691D2823DD4E00B1491B /* Kagi Search macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kagi Search macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C31E691D2823DD4E00B1491B /* Kagi Search for Safari.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kagi Search for Safari.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C39A9F7028588C0100E4C0A3 /* MainConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MainConfig.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -463,7 +463,7 @@
 		C31E691E2823DD4E00B1491B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C31E691D2823DD4E00B1491B /* Kagi Search macOS.app */,
+				C31E691D2823DD4E00B1491B /* Kagi Search for Safari.app */,
 				3ED5D48F2B0DE087009DDDAD /* Kagi Search Extension iOS.appex */,
 				3ED5D4AC2B0DE2BD009DDDAD /* Kagi Search Extension macOS.appex */,
 				3ED5D4CE2B0DE3AD009DDDAD /* Kagi Search iOS.app */,
@@ -629,7 +629,7 @@
 			);
 			name = "Kagi Search macOS";
 			productName = "Kagi Search";
-			productReference = C31E691D2823DD4E00B1491B /* Kagi Search macOS.app */;
+			productReference = C31E691D2823DD4E00B1491B /* Kagi Search for Safari.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1634,7 +1634,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Kagi-Search-macOS-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Kagi Search for Safari";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(MARKETING_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Kagi Search is a quick, user-centric, 100% privacy-respecting search engine with results augmented by non-commercial indexes and personalized searches.";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
@@ -1652,7 +1652,7 @@
 					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kagimacOS.Kagi-Search";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Kagi Search for Safari";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1674,7 +1674,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Kagi-Search-macOS-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Kagi Search for Safari";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(MARKETING_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Kagi Search is a quick, user-centric, 100% privacy-respecting search engine with results augmented by non-commercial indexes and personalized searches.";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
@@ -1692,7 +1692,7 @@
 					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kagimacOS.Kagi-Search";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Kagi Search for Safari";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
